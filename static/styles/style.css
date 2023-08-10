@@ -1,0 +1,117 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(2, 10, 19);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    color: rgb(238, 238, 238);
+    margin: 0px;
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: block;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+    text-align: center;
+    cursor: pointer;
+}
+
+input {
+
+    background-color: rgb(221, 221, 221);
+    padding: 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: initial;
+    border-image: initial;
+    border-radius: 5px;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-top: 20px;
+}
+
+th {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+    background-color: rgb(102, 30, 197);
+
+} 
+td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+button {
+    width: 130px;
+    height: 35px;
+    background-color: transparent;
+    color: rgb(221, 120, 53);
+    cursor: pointer;
+    display: inline-block;
+    margin: 30px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(221, 120, 53);
+    border-image: initial;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease 0s;
+}
+
+button:hover {
+    background-color: rgb(221, 120, 53);
+    color: rgb(238, 238, 238);
+}
+
+#codigo {
+    text-transform: uppercase;
+}
+
+#calculator {
+    max-width: 100%;
+    height: 50px;
+    vertical-align: middle;
+}
+
+#btnReset {
+    width: 130px;
+    height: 35px;
+    background-color: transparent;
+    color: rgb(53, 221, 137);
+    cursor: pointer;
+    display: inline-block;
+    margin: 30px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(53, 221, 137);
+    border-image: initial;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease 0s;
+}
+
+
+#btnReset:hover {
+    background-color: rgb(53, 221, 137);
+    color: rgb(238, 238, 238);
+}
