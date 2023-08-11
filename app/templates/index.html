@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de cotas FIIS</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
+    <link rel="icon" href="{{ url_for('static',filename='styles/icons8-prédio-96.png') }} ">
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1><i><img id="calculator" src="https://img.icons8.com/cotton/64/calculator--v2.png" /></i> Calculadora de cotas FIIS</h1>
+        <form action="{{ url_for('calc')}}" method="post">
+            <label for="codigo">Código do Fundo:</label>
+            <input type="text" id="codigo" name="codigo" placeholder="Separar por vírgula" multiple><br><br>
+            <label for="quantidade">Quantidade de Cotas:</label>
+            <input type="number" id="quantidade" name="quantidade" required><br><br>
+            <button type="submit" id="btnCalcular">Calcular</button>
+            <button type="reset" id="btnReset" onclick="window.location.href='/calculadora'">Limpar</button>
+        </form>
+
+        {% if tableData %}
+        <table>
+            <tr>
+                <th>Codigo Fundo</th>
+                <th>Quantidade de cotas</th>
+                <th>Valor por cota</th>
+                <th>Valor a ser investido</th>
+                <th>Retorno de dividendos ( Baseado no ultimo pagamento )</th>
+                <th>Valor a Investir ( Para receber R$1000/M)</th>
+            </tr>
+            {% for row in tableData: %}
+                <tr>
+                    <td>{{ row['fundo'] }}</td>
+                    <td>{{ row['cotas'] }}</td>
+                    <td>{{ row['preco'] }}</td>
+                    <td>R$ {{ row['investimento'] }}</td>
+                    <td>R$ {{ row['dividendo'] }}</td>
+                    <td>R$ {{ row['totalInvestir'] }}</td>
+
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+    </div>
+</body>
+
+</html>

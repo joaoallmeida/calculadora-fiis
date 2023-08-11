@@ -88,6 +88,10 @@ button:hover {
     text-transform: uppercase;
 }
 
+#codigo::placeholder{
+    text-transform: initial;
+}
+
 #calculator {
     max-width: 100%;
     height: 50px;
