@@ -7,7 +7,7 @@ body {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 600;
     color: rgb(238, 238, 238);
-    margin: 0px;
+    margin: 15px;
 }
 
 .container {
@@ -58,11 +58,13 @@ th {
     background-color: rgb(102, 30, 197);
 
 } 
+
 td {
     padding: 8px;
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
+
 button {
     width: 130px;
     height: 35px;
@@ -114,8 +116,46 @@ button:hover {
     transition: all 0.3s ease 0s;
 }
 
-
 #btnReset:hover {
     background-color: rgb(53, 221, 137);
     color: rgb(238, 238, 238);
 }
+
+
+/* Media query for tablets and larger mobile screens */
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    button, #btnReset {
+        margin: 12px;
+    }
+    table {
+      font-size: 14px; /* Adjust font size for better readability on smaller screens */
+    }
+    
+    table th, table td {
+      padding: 6px; /* Reduce padding for tighter layout */
+    }
+  }
+  
+  /* Media query for smaller mobile screens */
+  @media screen and (max-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+    button, #btnReset {
+        margin: 10px;
+    }
+
+    table {
+      font-size: 12px; /* Further reduce font size for smaller screens */
+    }
+    
+    table th, table td {
+      display: flexbox ;
+      padding: 4px; /* Reduce padding even more */
+      text-align: center; /* Center-align table cell content */
+    }
+    
+  }

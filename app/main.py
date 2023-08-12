@@ -33,27 +33,27 @@ def get_data() -> pd.DataFrame:
 
 def calculator(codes:list, cotes:int) -> list[str, any]:
     try:
-
         data = list()
 
         df = get_data()
         df = df[df['TICKER'].isin(codes)]
+        
+        if not df.empty:
+            for x, y in df.iterrows():
 
-        for x, y in df.iterrows():
+                data.append({
+                    "fundo": y['TICKER'],
+                    "preco": y['PRECO'],
+                    "cotas": cotes,
+                    "ult_dividendo": y['ULTIMO DIVIDENDO'],
+                    "investimento": "{:,.2f}".format(y['PRECO'] * cotes),
+                    "dividendo": "{:,.2f}".format(cotes * y['ULTIMO DIVIDENDO']),
+                    "totalInvestir": "{:,.2f}".format(y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO'])
+                })
 
-            data.append({
-                "fundo": y['TICKER'],
-                "preco": y['PRECO'],
-                "cotas": cotes,
-                "ult_dividendo": y['ULTIMO DIVIDENDO'],
-                "investimento": "{:,.2f}".format(y['PRECO'] * cotes),
-                "dividendo": "{:,.2f}".format(cotes * y['ULTIMO DIVIDENDO']),
-                "totalInvestir": "{:,.2f}".format(y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO'])
-            })
-
-        return data
     except Exception as e:
         raise e
+    return data
 
 
 @app.route('/')
@@ -64,7 +64,7 @@ def index():
 def calc():
     if request.method == "POST":
     
-        codes = request.form.get('codigo').split(',')
+        codes = request.form.get('codigo').upper().split(',')
         cotes = int(request.form.get('quantidade'))
 
         data = calculator(codes,cotes)
