@@ -7,13 +7,14 @@
     <title>Calculadora de cotas FIIS</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
     <link rel="icon" href="{{ url_for('static',filename='styles/icons8-prédio-96.png') }} ">
-    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+    <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
 
 </head>
 
 <body>
     <div class="container">
-        <h1><i><img id="calculator" src="https://img.icons8.com/cotton/64/calculator--v2.png" /></i> Calculadora de cotas FIIS</h1>
+        <h1><i><img id="calculator" src="https://img.icons8.com/cotton/64/calculator--v2.png" /></i> Calculadora de
+            cotas FIIS</h1>
         <form action="{{ url_for('calc')}}" method="post">
             <label for="codigo">Código do Fundo:</label>
             <input type="text" id="codigo" name="codigo" placeholder="Separar por vírgula" multiple><br><br>
@@ -23,7 +24,7 @@
             <button type="reset" id="btnReset" onclick="window.location.href='/calculadora'">Limpar</button>
         </form>
 
-        {% if tableData %}
+        {% if data %}
         <table>
             <tr>
                 <th>Codigo Fundo</th>
@@ -33,17 +34,25 @@
                 <th>Retorno de dividendos ( Baseado no ultimo pagamento )</th>
                 <th>Valor a Investir ( Para receber R$1000/M)</th>
             </tr>
-            {% for row in tableData: %}
-                <tr>
-                    <td>{{ row['fundo'] }}</td>
-                    <td>{{ row['cotas'] }}</td>
-                    <td>{{ row['preco'] }}</td>
-                    <td>R$ {{ row['investimento'] }}</td>
-                    <td>R$ {{ row['dividendo'] }}</td>
-                    <td>R$ {{ row['totalInvestir'] }}</td>
+            {% for row in data: %}
+            <tr>
+                <td>{{ row['fundo'] }}</td>
+                <td>{{ row['cotas'] }}</td>
+                <td>R$ {{ "{:,.2f}".format(row['preco']) }}</td>
+                <td>R$ {{ "{:,.2f}".format(row['investimento']) }}</td>
+                <td>R$ {{ "{:,.2f}".format(row['dividendo']) }}</td>
+                <td>R$ {{ "{:,.2f}".format(row['totalInvestir']) }}</td>
 
-                </tr>
+            </tr>
             {% endfor %}
+            <tfoot>
+                <tr>
+                    <th id="total" colspan="3">Total :</th>
+                    <td>R$ {{ "{:,.2f}".format(total_investido) }}</td>
+                    <td>R$ {{ "{:,.2f}".format(total_dividendos) }}</td>
+                    <td>R$ {{ "{:,.2f}".format(total_investir) }}</td>
+                </tr>
+            </tfoot>
         </table>
         {% endif %}
 

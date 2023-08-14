@@ -46,9 +46,9 @@ def calculator(codes:list, cotes:int) -> list[str, any]:
                     "preco": y['PRECO'],
                     "cotas": cotes,
                     "ult_dividendo": y['ULTIMO DIVIDENDO'],
-                    "investimento": "{:,.2f}".format(y['PRECO'] * cotes),
-                    "dividendo": "{:,.2f}".format(cotes * y['ULTIMO DIVIDENDO']),
-                    "totalInvestir": "{:,.2f}".format(y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO'])
+                    "investimento": (y['PRECO'] * cotes),
+                    "dividendo": (cotes * y['ULTIMO DIVIDENDO']),
+                    "totalInvestir": (y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO'])
                 })
 
     except Exception as e:
@@ -69,7 +69,11 @@ def calc():
 
         data = calculator(codes,cotes)
         
-        return render_template('index.html', tableData=data)
+        total_investido = sum((row['investimento']) for row in data)
+        total_dividendo = sum(row['dividendo'] for row in data)
+        total_investir= sum(row['totalInvestir'] for row in data)
+        
+        return render_template('index.html', data=data, total_investido=total_investido, total_dividendos=total_dividendo, total_investir=total_investir)
 
     return render_template('index.html')
 
