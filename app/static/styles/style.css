@@ -136,7 +136,7 @@ button:hover {
 /* Media query for tablets and larger mobile screens */
 @media screen and (max-width: 768px) {
     body {
-        font-size: 14px;
+        font-size: 15px;
         margin: 15px;
     }
     button, #btnReset {
@@ -158,7 +158,7 @@ button:hover {
   /* Media query for smaller mobile screens */
   @media screen and (max-width: 480px) {
     body {
-        font-size: 12px;
+        font-size: 11px;
         margin: 15px;
     }
     button, #btnReset {
