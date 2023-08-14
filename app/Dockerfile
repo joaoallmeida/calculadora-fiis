@@ -1,12 +1,14 @@
-FROM python:3.10.12-slim
+FROM python:3.10.12
+
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
+                        libatlas-base-dev \
+                        python3-dev
 
 WORKDIR /app
-
-COPY requirements.txt /app
-
-RUN pip3 install --upgrade pip && pip3 install -r requirements.txt 
-
 COPY . /app
 
+RUN pip install --upgrade pip && pip install -r requirements.txt 
+
 EXPOSE 5000
-CMD [ "python", "./main.py" ]
+CMD ["uwsgi", "--ini", "./wsgi.ini"]
