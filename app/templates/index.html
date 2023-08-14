@@ -13,7 +13,8 @@
 
 <body>
     <div class="container">
-        <h1><i><img id="calculator" src="https://img.icons8.com/cotton/64/calculator--v2.png" /></i> Calculadora de Rendimentos FIIs</h1>
+        <h1><i><img id="calculator" src="https://img.icons8.com/cotton/64/calculator--v2.png" /></i> Calculadora de
+            Rendimentos FIIs</h1>
         <form action="{{ url_for('calc')}}" method="post">
             <label for="codigo">Código do Fundo:</label>
             <input type="text" id="codigo" name="codigo" placeholder="Separar por vírgula" multiple><br><br>
@@ -23,6 +24,18 @@
             <button type="reset" id="btnReset" onclick="window.location.href='/calculadora'">Limpar</button>
         </form>
 
+        {% with message = get_flashed_messages(category_filter=["warning"]) %}
+            {% if message %}
+                <div id="alert">
+                    <ul>
+                        {% for msg in message: %}
+                            <li>{{ msg }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+        
         {% if data %}
         <table>
             <tr>

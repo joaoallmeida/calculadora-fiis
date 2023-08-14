@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 import requests
 import pandas as pd
 import io
 
 app = Flask(__name__)
-
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 def get_data() -> pd.DataFrame:
         try:
@@ -68,12 +68,16 @@ def calc():
         cotes = int(request.form.get('quantidade'))
 
         data = calculator(codes,cotes)
+
+        if data:
+            total_investido = sum((row['investimento']) for row in data)
+            total_dividendo = sum(row['dividendo'] for row in data)
+            total_investir= sum(row['totalInvestir'] for row in data)    
+
+            return render_template('index.html', data=data, total_investido=total_investido, total_dividendos=total_dividendo, total_investir=total_investir)
+        else:
+            flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codes)}", "warning")
         
-        total_investido = sum((row['investimento']) for row in data)
-        total_dividendo = sum(row['dividendo'] for row in data)
-        total_investir= sum(row['totalInvestir'] for row in data)
-        
-        return render_template('index.html', data=data, total_investido=total_investido, total_dividendos=total_dividendo, total_investir=total_investir)
 
     return render_template('index.html')
 
