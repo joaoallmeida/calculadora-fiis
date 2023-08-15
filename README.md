@@ -4,7 +4,7 @@ Uma ferramenta online para calcular dividendos e estimar cotas de fundos imobili
 
 ## Visão Geral
 
-A Calculadora de Dividendos para Fundos Imobiliários é uma página web concebida para simplificar o cálculo de dividendos de fundos imobiliários, com base na quantidade desejada de cotas.
+A Calculadora de Dividendos para Fundos Imobiliários é uma página web criada para simplificar o cálculo de dividendos de fundos imobiliários, com base na quantidade desejada de cotas.
 
 ![Screenshot](docs/tela.png)
 
@@ -34,6 +34,6 @@ Abra o seu navegador e acesse o seguinte link: [http://127.0.0.1:5000](http://12
 
 Os dados utilizados neste projeto são obtidos a partir da URL [https://statusinvest.com.br/fundos-imobiliarios/busca-avancada](https://statusinvest.com.br/fundos-imobiliarios/busca-avancada). A coleta de dados é realizada utilizando a biblioteca *requests*, o que resulta em um desempenho eficiente durante o cálculo.
 
-Espero que esta calculadora seja uma ferramenta útil para ajudar você a estimar dividendos e cotas de fundos imobiliários de forma conveniente e precisa.
+Espero que esta calculadora seja uma ferramenta útil para ajudar você a estimar dividendos e cotas de fundos imobiliários.
 
-**Obs: Os calculos sao baseados nos ultimos dividendo pagos, este calculo não é 100% preciso, serve apenas para ter uma noção de ganhos.**
+**Obs: Os cálculos têm como base os dividendos pagos mais recentes. No entanto, é importante ressaltar que essa estimativa não é absolutamente precisa; ela é fornecida apenas como uma referência aproximada dos possíveis ganhos.**

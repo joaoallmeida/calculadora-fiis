@@ -31,12 +31,12 @@ def get_data() -> pd.DataFrame:
         
         return df 
 
-def calculator(codes:list, cotes:int) -> list[str, any]:
+def calculator(codigos:list, cotas:int) -> list[str, any]:
     try:
         data = list()
 
         df = get_data()
-        df = df[df['TICKER'].isin(codes)]
+        df = df[df['TICKER'].isin(codigos)]
         
         if not df.empty:
             for x, y in df.iterrows():
@@ -44,10 +44,10 @@ def calculator(codes:list, cotes:int) -> list[str, any]:
                 data.append({
                     "fundo": y['TICKER'],
                     "preco": y['PRECO'],
-                    "cotas": cotes,
+                    "cotas": cotas,
                     "ult_dividendo": y['ULTIMO DIVIDENDO'],
-                    "investimento": (y['PRECO'] * cotes),
-                    "dividendo": (cotes * y['ULTIMO DIVIDENDO']),
+                    "investimento": (y['PRECO'] * cotas),
+                    "dividendo": (cotas * y['ULTIMO DIVIDENDO']),
                     "totalInvestir": (y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO'])
                 })
 
@@ -55,32 +55,40 @@ def calculator(codes:list, cotes:int) -> list[str, any]:
         raise e
     return data
 
-
 @app.route('/')
 def index():
+    # Redirecionando URL para o endereço /calculadora
     return redirect('/calculadora')
 
 @app.route("/calculadora", methods=['GET','POST'])
 def calc():
+    # Verifica o tipo de requisição.
     if request.method == "POST":
-    
-        codes = request.form.get('codigo').upper().split(',')
-        cotes = int(request.form.get('quantidade'))
+        """
+            Coleta os dados de entradas:
+             * Codigo do fundo
+             * Quantidade de cotas
+        """
+        codigos = request.form.get('codigo').upper().split(',')
+        cotas = int(request.form.get('quantidade'))
 
-        data = calculator(codes,cotes)
+        # Realizando coleta dos dados.
+        data = calculator(codigos,cotas)
 
+        # Verifica houve retorno na busca dos dados.
         if data:
+
+            # Gerando calculos dos montantes.
             total_investido = sum((row['investimento']) for row in data)
             total_dividendo = sum(row['dividendo'] for row in data)
             total_investir= sum(row['totalInvestir'] for row in data)    
 
             return render_template('index.html', data=data, total_investido=total_investido, total_dividendos=total_dividendo, total_investir=total_investir)
         else:
-            flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codes)}", "warning")
+            flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codigos)}", "warning")
         
 
     return render_template('index.html')
 
 if __name__=="__main__":
     app.run(host="0.0.0.0")
-    
