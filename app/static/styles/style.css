@@ -174,5 +174,9 @@ button:hover {
       padding: 4px; /* Reduce padding even more */
       text-align: center; /* Center-align table cell content */
     }
+    #alert {
+        width: auto;
+        padding-left: 0;
+    }
     
   }
