@@ -24,6 +24,7 @@ def get_data() -> pd.DataFrame:
 
             df = pd.read_csv(io.StringIO(content.decode('utf-8')), sep=';')
             df['PRECO'] = df['PRECO'].apply(lambda x: float(x.replace(".", "").replace(",", ".")))
+            df['DY'] = df['DY'].apply(lambda x: float(x.replace(".", "").replace(",", ".")))
             df['ULTIMO DIVIDENDO'] = df['ULTIMO DIVIDENDO'].apply(lambda x: float(str(x).replace(".", "").replace(",", ".")))
 
         except Exception as e:
@@ -31,7 +32,7 @@ def get_data() -> pd.DataFrame:
         
         return df 
 
-def calculator(codigos:list, cotas:int) -> list[str, any]:
+def calculator(codigos:list, cotas:int, valor:float) -> list[str, any]:
     try:
         data = list()
 
@@ -40,16 +41,24 @@ def calculator(codigos:list, cotas:int) -> list[str, any]:
         
         if not df.empty:
             for x, y in df.iterrows():
+                
+                if cotas == 0:
+                    cotas = ( (valor / len(df.index)) / y['PRECO'])
 
-                data.append({
+                values = {
                     "fundo": y['TICKER'],
                     "preco": y['PRECO'],
-                    "cotas": cotas,
+                    "cotas": round(cotas),
                     "ult_dividendo": y['ULTIMO DIVIDENDO'],
-                    "investimento": (y['PRECO'] * cotas),
-                    "dividendo": (cotas * y['ULTIMO DIVIDENDO']),
-                    "totalInvestir": (y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO'])
-                })
+                    "investimento": (y['PRECO'] * cotas), 
+                    "dividendo": (cotas * y['ULTIMO DIVIDENDO']), #TO DO: Trocar a formula por COTAS * (PRECO * DY)
+                    "totalInvestir": (y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO']),
+                    "totalCotas": round((1000 / y['ULTIMO DIVIDENDO']))
+                }
+
+                data.append(values)
+
+                cotas = 0
 
     except Exception as e:
         raise e
@@ -68,24 +77,37 @@ def calc():
             Coleta os dados de entradas:
              * Codigo do fundo
              * Quantidade de cotas
+             * Valor a investir
         """
+      
         codigos = request.form.get('codigo').upper().split(',')
         cotas = int(request.form.get('quantidade'))
+        valor = float(request.form.get('valor'))
 
-        # Realizando coleta dos dados.
-        data = calculator(codigos,cotas)
-
-        # Verifica houve retorno na busca dos dados.
-        if data:
-
-            # Gerando calculos dos montantes.
-            total_investido = sum((row['investimento']) for row in data)
-            total_dividendo = sum(row['dividendo'] for row in data)
-            total_investir= sum(row['totalInvestir'] for row in data)    
-
-            return render_template('index.html', data=data, total_investido=total_investido, total_dividendos=total_dividendo, total_investir=total_investir)
+        # Verifica se as variaveis cotas e valor possuem valores de entrada.
+        if cotas == 0 and valor == 0:
+            flash("Não foram definidos valores ou cotas.","warning")
         else:
-            flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codigos)}", "warning")
+            # Realizando coleta dos dados.
+            data = calculator(codigos,cotas, valor)
+
+            # Verifica houve retorno na busca dos dados.
+            if data:
+
+                # Gerando calculos dos montantes.
+                total_investido = sum((row['investimento']) for row in data)
+                total_dividendo = sum(row['dividendo'] for row in data)
+                total_investir= sum(row['totalInvestir'] for row in data)    
+                total_cotas= sum(row['totalCotas'] for row in data)    
+
+                return render_template('index.html'
+                                    , data=data
+                                    , total_investido=total_investido
+                                    , total_dividendos=total_dividendo
+                                    , total_investir=total_investir
+                                    , total_cotas=total_cotas)
+            else:
+                flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codigos)}", "warning")
         
 
     return render_template('index.html')

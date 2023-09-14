@@ -17,9 +17,11 @@
         <h1> Calculadora de Rendimentos FIIs</h1>
         <form action="{{ url_for('calc')}}" method="post">
             <label for="codigo">Código do Fundo:</label>
-            <input type="text" id="codigo" name="codigo" placeholder="Separar por vírgula" multiple><br><br>
+            <input type="text" id="codigo" name="codigo" placeholder="Separar por vírgula" multiple required><br><br>
             <label for="quantidade">Quantidade de Cotas:</label>
-            <input type="number" id="quantidade" name="quantidade" required><br><br>
+            <input type="number" id="quantidade" name="quantidade"  value=0><br><br>
+            <label for="valor">Valor a investir:</label>
+            <input type="number" id="valor" name="valor" value=0 step="0.01"><br><br>
             <button type="submit" id="btnCalcular">Calcular</button>
             <button type="reset" id="btnReset" onclick="window.location.href='/calculadora'">Limpar</button>
         </form>
@@ -45,6 +47,7 @@
                 <th>Valor a ser investido</th>
                 <th>Retorno de dividendos ( Baseado no ultimo pagamento )</th>
                 <th>Valor a Investir ( Para receber R$1000/M)</th>
+                <th>Total de cotas ( Para receber R$1000/M)</th>
             </tr>
             {% for row in data: %}
             <tr>
@@ -54,17 +57,21 @@
                 <td>R$ {{ "{:,.2f}".format(row['investimento']) }}</td>
                 <td>R$ {{ "{:,.2f}".format(row['dividendo']) }}</td>
                 <td>R$ {{ "{:,.2f}".format(row['totalInvestir']) }}</td>
-
+                <td>{{ row['totalCotas'] }}</td>
+                
             </tr>
             {% endfor %}
-            <tfoot>
-                <tr>
-                    <th id="total" colspan="3">Total :</th>
-                    <td>R$ {{ "{:,.2f}".format(total_investido) }}</td>
-                    <td>R$ {{ "{:,.2f}".format(total_dividendos) }}</td>
-                    <td>R$ {{ "{:,.2f}".format(total_investir) }}</td>
-                </tr>
-            </tfoot>
+            {% if data|length > 1 %}
+                <tfoot>
+                    <tr>
+                        <th id="total" colspan="3">Total :</th>
+                        <td>R$ {{ "{:,.2f}".format(total_investido) }}</td>
+                        <td>R$ {{ "{:,.2f}".format(total_dividendos) }}</td>
+                        <td>R$ {{ "{:,.2f}".format(total_investir) }}</td>
+                        <td>{{ total_cotas }}</td>
+                    </tr>
+                </tfoot>
+            {% endif %}
         </table>
         {% endif %}
 

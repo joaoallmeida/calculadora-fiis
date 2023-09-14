@@ -9,7 +9,7 @@ RUN apt-get install -y --no-install-recommends \
                         libffi-dev
 
 WORKDIR /app
-COPY . /app
+COPY /app /app
 
 RUN pip install --upgrade pip setuptools wheel && pip install -r requirements.txt 
 
