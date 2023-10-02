@@ -32,7 +32,7 @@ def get_data() -> pd.DataFrame:
         
         return df 
 
-def calculator(codigos:list, cotas:int, valor:float) -> list[str, any]:
+def calculator(codigos:list, escolha:str, valor:float) -> list[str, any]:
     try:
         data = list()
 
@@ -42,7 +42,9 @@ def calculator(codigos:list, cotas:int, valor:float) -> list[str, any]:
         if not df.empty:
             for x, y in df.iterrows():
                 
-                if cotas == 0:
+                if escolha == 'cotas':
+                    cotas = valor
+                else:
                     cotas = ( (valor / len(df.index)) / y['PRECO'])
 
                 values = {
@@ -58,11 +60,13 @@ def calculator(codigos:list, cotas:int, valor:float) -> list[str, any]:
 
                 data.append(values)
 
-                cotas = 0
+                # cotas = 0
 
     except Exception as e:
         raise e
     return data
+
+###########################################################
 
 @app.route('/')
 def index():
@@ -79,35 +83,36 @@ def calc():
              * Quantidade de cotas
              * Valor a investir
         """
-      
+
+        data = None
         codigos = request.form.get('codigo').upper().split(',')
-        cotas = int(request.form.get('quantidade'))
         valor = float(request.form.get('valor'))
+        escolha = request.form.get('radio')
 
-        # Verifica se as variaveis cotas e valor possuem valores de entrada.
-        if cotas == 0 and valor == 0:
+        if escolha == 'dinheiro':
+            data = calculator(codigos,escolha=escolha,  valor=valor)
+        elif escolha == 'cotas':
+            data = calculator(codigos, escolha=escolha, valor=valor)
+        elif data is None:
             flash("Não foram definidos valores ou cotas.","warning")
+
+        # Verifica houve retorno na busca dos dados.
+        if data:
+
+            # Gerando calculos dos montantes.
+            total_investido = sum((row['investimento']) for row in data)
+            total_dividendo = sum(row['dividendo'] for row in data)
+            total_investir= sum(row['totalInvestir'] for row in data)    
+            total_cotas= sum(row['totalCotas'] for row in data)    
+
+            return render_template('index.html'
+                                , data=data
+                                , total_investido=total_investido
+                                , total_dividendos=total_dividendo
+                                , total_investir=total_investir
+                                , total_cotas=total_cotas)
         else:
-            # Realizando coleta dos dados.
-            data = calculator(codigos,cotas, valor)
-
-            # Verifica houve retorno na busca dos dados.
-            if data:
-
-                # Gerando calculos dos montantes.
-                total_investido = sum((row['investimento']) for row in data)
-                total_dividendo = sum(row['dividendo'] for row in data)
-                total_investir= sum(row['totalInvestir'] for row in data)    
-                total_cotas= sum(row['totalCotas'] for row in data)    
-
-                return render_template('index.html'
-                                    , data=data
-                                    , total_investido=total_investido
-                                    , total_dividendos=total_dividendo
-                                    , total_investir=total_investir
-                                    , total_cotas=total_cotas)
-            else:
-                flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codigos)}", "warning")
+            flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codigos)}", "warning")
         
 
     return render_template('index.html')
