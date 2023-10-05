@@ -68,28 +68,28 @@
                 <th>Investimento R$1000/m</th>
                 <th>Total de cotas R$1000/m</th>
             </tr>
-            {% for row in data: %}
-            <tr>
-                <td data-cell="Código Fundo" >{{ row['fundo'] }}</td>
-                <td data-cell="N Cotas" >{{ "{:,.2f}".format(row['cotas']) }}</td>
-                <td data-cell="Preço" >R$ {{ "{:,.2f}".format(row['preco']) }}</td>
-                <td data-cell="Valor a Investir" >R$ {{ "{:,.2f}".format(row['investimento']) }}</td>
-                <td data-cell="Dividendos" >R$ {{ "{:,.2f}".format(row['dividendo']) }}</td>
-                <td data-cell="Investimento R$1000/m" >R$ {{ "{:,.2f}".format(row['totalInvestir']) }}</td>
-                <td data-cell="Cotas R$1000/m" >{{ "{:,.2f}".format(row['totalCotas']) }}</td>
-                
-            </tr>
+            {% for row in data['result']: %}
+                <tr>
+                    <td data-cell="Código Fundo" >{{ row['fundo'] }}</td>
+                    <td data-cell="N Cotas" >{{ "{:,.2f}".format(row['cotas']) }}</td>
+                    <td data-cell="Preço" >R$ {{ "{:,.2f}".format(row['preco']) }}</td>
+                    <td data-cell="Valor a Investir" >R$ {{ "{:,.2f}".format(row['investimento']) }}</td>
+                    <td data-cell="Dividendos" >R$ {{ "{:,.2f}".format(row['dividendo']) }}</td>
+                    <td data-cell="Investimento R$1000/m" >R$ {{ "{:,.2f}".format(row['totalInvestir']) }}</td>
+                    <td data-cell="Cotas R$1000/m" >{{ "{:,.2f}".format(row['totalCotas']) }}</td>
+                    
+                </tr>
             {% endfor %}
             {% if data|length > 1 %}
                 <tfoot>
                     <tr>
                         <th id="total" colspan="3" data-cell="Totais">Total</th>
-                        <td data-cell="Total a investir">R$ {{ "{:,.2f}".format(total_investido) }}</td>
-                        <td data-cell="Total de dividendos">R$ {{ "{:,.2f}".format(total_dividendos) }}</td>
-                        <td data-cell="Total investido R$1000/m">R$ {{ "{:,.2f}".format(total_investir) }}</td>
-                        <td data-cell="Total de cotas R$1000/m">{{ "{:,.2f}".format(total_cotas)  }}</td>
-                    </tr>
-                </tfoot>
+                        <td data-cell="Total a investir">R$ {{ "{:,.2f}".format(data['summary']['total_investido']) }}</td>
+                        <td data-cell="Total de dividendos">R$ {{ "{:,.2f}".format(data['summary']['total_dividendo']) }}</td>
+                        <td data-cell="Total investido R$1000/m">R$ {{ "{:,.2f}".format(data['summary']['total_investir']) }}</td>
+                        <td data-cell="Total de cotas R$1000/m">{{ "{:,.2f}".format(data['summary']['total_cotas'])  }}</td>
+                        </tr>
+                    </tfoot>
             {% endif %}
         </table>
         {% endif %}
