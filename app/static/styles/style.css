@@ -37,7 +37,7 @@ img {
     margin: 0;
     display: grid;
     font-weight: bold;
-    text-align: center;    
+    text-align: center;   
 }
 
 .escolhas{
@@ -60,6 +60,46 @@ img {
 
 .btn {
     display: inline-block;
+}
+
+.alert {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin: 10px;
+    line-height: 1.8;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 400;
+}
+
+.alertText {
+    display: table;
+    margin: 0 auto;
+    text-align: left;
+    font-size: 16px;
+}
+  
+.closeBtn {
+    float: right;
+    margin-left: 18px;
+    font-size: 30px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+.warning {
+    background-color: #FDF7DF;
+    border: 1px solid #FEEC6F;
+    color: #a37c19;
+}
+
+.error {
+    background-color: #FEE;
+    border: 1px solid #EDD;
+    color: #A66;
 }
 
 input[type="number"] {
@@ -195,17 +235,7 @@ button:hover {
     color: rgb(238, 238, 238);
 }
 
-#alert {
-    color: #9F6000;
-    background-color: #FEEFB3;
-    margin: 15px;
-    padding: 15px;
-    width: 600px;
-    height: 100px;
-    border-radius: 0.5rem;
-    display: flex;
-    align-items: center;
-}
+
 
 
 /* Media query for tablets and larger mobile screens */
@@ -225,8 +255,9 @@ button:hover {
       padding: 4px; 
     }
 
-    #alert {
+    .alert {
         width: auto;
+        margin: 0 120px;
     }
 
 }
@@ -283,9 +314,9 @@ button:hover {
         border-bottom: 0;
     }
       
-    #alert {
+    .alert {
         width: auto;
-        padding-left: 0;
+        margin: 0 auto;
     }
     
 }

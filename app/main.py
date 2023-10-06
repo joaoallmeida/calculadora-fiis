@@ -1,15 +1,19 @@
 from flask import Flask, render_template, request, redirect, flash
+from typing import Dict
 import requests
 import pandas as pd
 import io
+import traceback
+
 
 
 class Calculator:
 
     def __init__(self, codes:list, choice:str, value:float) -> None:
-        self.codes = codes
+        self.codes = [x.strip() for x in codes]
         self.choice = choice 
         self.value = value
+
 
     def get_data(self) -> pd.DataFrame:
             
@@ -29,8 +33,8 @@ class Calculator:
                 response.raise_for_status()
 
                 df = pd.read_csv(io.StringIO(content.decode('utf-8')), sep=';')
-                df = df[df['TICKER'].isin(self.codes)]
 
+                df = df[df['TICKER'].isin(self.codes)]
                 df['PRECO'] = df['PRECO'].apply(lambda x: float(x.replace(".", "").replace(",", ".")))
                 df['DY'] = df['DY'].apply(lambda x: float(x.replace(".", "").replace(",", ".")))
                 df['ULTIMO DIVIDENDO'] = df['ULTIMO DIVIDENDO'].apply(lambda x: float(str(x).replace(".", "").replace(",", ".")))
@@ -39,48 +43,57 @@ class Calculator:
                 raise e
             
             return df
+    
+    def check_exists(self, df:pd.DataFrame):
+        check = False
+        for code in self.codes:
+            if code not in df['TICKER'].values:
+                flash(f"Fundo imobiliário {code} não encontrado.", "warning")
+            else:
+                check = True
+        return check
 
-    def calculator(self, ) -> dict:
+    def calculator(self) -> Dict:
         
         data_list = list()
         data_dict = dict()
         
         try:
             df = self.get_data()
-            
-            if not df.empty:
-                for x, y in df.iterrows():
-                    
+
+            if self.check_exists(df):
+                for _ , row in df.iterrows():
+        
                     if self.choice == 'cotas':
                         cotes = self.value
                     else:
-                        cotes = ( (self.value / len(df.index)) / y['PRECO'])
+                        cotes = ( (self.value / len(df.index)) / row['PRECO'])
 
                     values = {
-                        "fundo": y['TICKER'],
-                        "preco": y['PRECO'],
+                        "fundo": row['TICKER'],
+                        "preco": row['PRECO'],
                         "cotas": round(cotes),
-                        "ult_dividendo": y['ULTIMO DIVIDENDO'],
-                        "investimento": (y['PRECO'] * cotes), 
-                        "dividendo": (cotes * y['ULTIMO DIVIDENDO']),
-                        "totalInvestir": (y['PRECO'] * 1000 / y['ULTIMO DIVIDENDO']),
-                        "totalCotas": round((1000 / y['ULTIMO DIVIDENDO']))
+                        "ult_dividendo": row['ULTIMO DIVIDENDO'],
+                        "investimento": (row['PRECO'] * cotes), 
+                        "dividendo": (cotes * row['ULTIMO DIVIDENDO']),
+                        "totalInvestir": (row['PRECO'] * 1000 / row['ULTIMO DIVIDENDO']),
+                        "totalCotas": round((1000 / row['ULTIMO DIVIDENDO']))
                     }
 
                     data_list.append(values)
+        
+                data_dict['result'] = data_list
             
-            data_dict['result'] = data_list
-            
-            if len(data_list) > 1:
-                data_dict['summary'] = {
-                    'total_investido': sum(row['investimento'] for row in data_list),
-                    'total_dividendo': sum(row['dividendo'] for row in data_list),
-                    'total_investir': sum(row['totalInvestir'] for row in data_list),
-                    'total_cotas':sum(row['totalCotas'] for row in data_list)    
-                }
+                if len(data_list) > 1:
+                    data_dict['summary'] = {
+                        'total_investido': sum(row['investimento'] for row in data_list),
+                        'total_dividendo': sum(row['dividendo'] for row in data_list),
+                        'total_investir': sum(row['totalInvestir'] for row in data_list),
+                        'total_cotas':sum(row['totalCotas'] for row in data_list)    
+                    }
 
         except Exception as e:
-            raise e
+            flash(f'Erro ao calcular metricas: {traceback.format_exc()}', "error")
         
         return data_dict
             
@@ -113,12 +126,7 @@ def calc():
         calc = Calculator(codes,choice,value)
         data = calc.calculator()
 
-        # Verifica houve retorno na busca dos dados.
-        if data:
-            return render_template('index.html'
-                                , data=data)
-        else:
-            flash(f"Fundo(s) imobiliário não encontrado: {', '.join(codes)}", "warning")
+        return render_template('index.html', data=data)
         
 
     return render_template('index.html')

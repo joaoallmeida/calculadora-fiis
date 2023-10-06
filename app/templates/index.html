@@ -8,7 +8,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}">
     <link rel="icon" href="{{ url_for('static',filename='styles/icons8-prédio-96.png') }} ">
     <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />
-
 </head>
 
 <body>
@@ -43,18 +42,14 @@
             </div>
         </form>
 
-        {% with message = get_flashed_messages(category_filter=["warning"]) %}
-            {% if message %}
-                <div id="alert">
-                    <ul>
-                        {% for msg in message: %}
-                            <li>{{ msg }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endwith %}
         
+        {% for category, msg in get_flashed_messages(with_categories=true): %}
+            <div class="alert {{ category }}">
+                <span class="closeBtn" onclick="this.parentElement.style.display='none';">x</span>
+                <span class="alertText">{{ msg }}</span>
+            </div>
+        {% endfor %}
+
         {% if data %}
         <hr>
         <h2> Resultado </h2>
@@ -95,6 +90,7 @@
         {% endif %}
 
     </div>
+    
 </body>
 
 </html>
