@@ -256,8 +256,13 @@ button:hover {
     }
 
     .alert {
-        width: auto;
-        margin: 0 120px;
+        margin: auto;
+    }
+
+    .alertText {
+        display: table;
+        text-align: left;
+        font-size: 14px;
     }
 
 }
@@ -313,10 +318,15 @@ button:hover {
     td:last-child {
         border-bottom: 0;
     }
-      
+
     .alert {
-        width: auto;
-        margin: 0 auto;
+        margin: auto;
+    }
+
+    .alertText {
+        display: table;
+        text-align: left;
+        font-size: 12px;
     }
     
 }
