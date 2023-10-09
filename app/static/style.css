@@ -1,0 +1,142 @@
+body {
+    background-color: #020a13;
+}
+
+input[type="text"] {
+   margin-left: 13rem !important;
+   margin-right: 13rem !important;
+}
+
+input[type="number"] {
+    margin-left: 13rem !important;
+    margin-right: 13rem !important;
+ }
+
+.btn-outline-primary {
+    color: #35dd89;
+    border-color: #35dd89;
+}
+.btn-outline-primary:hover {
+    background-color: #35dd89;
+    color: #eeeeee;
+    border-color: #35dd89;
+}
+.btn-outline-secondary {
+    color: #dd7835;
+    border-color: #dd7835;
+}
+.btn-outline-secondary:hover {
+    background-color: #dd7835;
+    color: #eeeeee;
+    border-color: #dd7835;
+}
+
+.table th {
+    color: #eeeeee;
+    background-color: #661ec5;
+    text-align: center;
+} 
+
+.table td {
+    border: 1px solid #ddd;
+    background-color: #020a13;
+    color: #eeeeee;
+    text-align: center;
+}
+
+
+/* Media query for tablets and larger mobile screens */
+@media screen and (max-width: 912px) {
+    body {
+        margin: auto;
+    }
+
+    .btn-outline-primary {
+        margin: 14px;
+    }
+
+    .btn-outline-secondary {
+        margin: 14px;
+    }
+
+    .table {
+      font-size: 12px;
+    }
+    
+    .table th, td {
+      padding: 4px; 
+    }
+
+}
+
+/* Media query for smaller mobile screens */
+@media screen and (max-width: 480px) {
+    body{
+        margin: auto;
+    }
+
+    input[type="text"] {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+     }
+     
+    input[type="number"] {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+     }
+
+    .btn-outline-primary {
+        margin: 10px;
+    }
+
+    .btn-outline-secondary {
+        margin: 10px;
+    }
+
+    .table {
+        border: 0;
+        margin: 20px 0;
+    }
+    
+    .table th {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        position: absolute;
+        width: 1px;
+    }
+    
+    .table tr {
+        border-bottom: 3px solid #661ec5;
+        display: block;
+        margin-bottom: .625em;
+    }
+    
+    .table td {
+        border: none;
+        display: block;
+        font-size: 10px;
+        text-align: right;
+        background-color: #020d18;
+    }
+    
+    .table td::before {
+        content: attr(data-cell) ": ";
+        float: left;
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+    
+    .table td:last-child {
+        border-bottom: 0;
+    }
+
+    .table tfoot tr {
+        display: flex;
+        border: 3px solid #3578dd;
+        text-align: center;
+    }
+
+}
