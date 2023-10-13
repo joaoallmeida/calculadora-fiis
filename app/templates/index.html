@@ -24,8 +24,8 @@
         <div class="mx-lg-5 px-lg-5 text-center">
             <form action="{{ url_for('calc')}}" method="post">
 
-                <div class="input-group mb-3 text-uppercase ms-auto me-auto">
-                    <input type="text" class="form-control" placeholder="Código Fundo" name="codigo" required multiple>
+                <div class="input-group mb-3 ms-auto me-auto">
+                    <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="codigo" required multiple>
                 </div>
 
                 <div class="form-check form-switch d-inline-block mb-4 mt-4 me-4">
@@ -39,8 +39,8 @@
                     <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
                 </div>
 
-                <div class="input-group ms-auto me-auto">
-                    <input type="number" name="valor" class="form-control" placeholder="0.00">
+                <div class="input-group mt-3 ms-auto me-auto">
+                    <input type="number" name="valor" class="form-control " placeholder="0.00">
                 </div>
 
                 <div class="">
@@ -61,8 +61,8 @@
             {% endfor %}
         </div>
 
+        {% if data %}
         <div class="table-responsive">
-            {% if data %}
             <hr>
             <h2 class="text-center text-white m-3"> Resultado </h2>
             <table class="table table-bordered">
@@ -99,8 +99,8 @@
                 </tfoot>
                 {% endif %}
             </table>
-            {% endif %}
         </div>
+        {% endif %}
     </div>
 
 </body>

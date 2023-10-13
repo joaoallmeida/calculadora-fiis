@@ -10,6 +10,7 @@ html{
 
 body {
     background-color: #020a13;
+    margin: 0;
 }
 
 .btn-outline-primary {
@@ -44,29 +45,32 @@ body {
     text-align: center;
 }
 
+input[type='text']::placeholder{
+    text-transform: initial;
+}
+
 
 /* Media query for tablets and larger mobile screens */
 @media screen and (max-width: 912px) {
     body{
         margin: auto;
     }
-
+    
     .btn-outline-primary {
         margin: 14px;
     }
-
+    
     .btn-outline-secondary {
         margin: 14px;
     }
-
+    
     .table {
-      font-size: 12px;
+        font-size: 12px;
     }
     
     .table th, td {
-      padding: 4px; 
+        padding: 4px; 
     }
-
 }
 
 /* Media query for smaller mobile screens */
@@ -74,15 +78,15 @@ body {
     body{
         margin: auto;
     }
-
+    
     .btn-outline-primary {
         margin: 10px;
     }
-
+    
     .btn-outline-secondary {
         margin: 10px;
     }
-
+    
     .table {
         border: 0;
         margin: 20px 0;
@@ -122,11 +126,12 @@ body {
     .table td:last-child {
         border-bottom: 0;
     }
-
+    
     .table tfoot tr {
         display: flex;
         border: 3px solid #661ec5;
         text-align: center;
     }
+
 
 }
