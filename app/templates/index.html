@@ -91,10 +91,10 @@
                 <tfoot>
                     <tr>
                         <th colspan="3" data-cell="Totais">Total</th>
-                        <td data-cell="Total a investir">R$ {{ "{:,.2f}".format(data['summary']['total_investido']) }}</td>
-                        <td data-cell="Total de dividendos">R$ {{ "{:,.2f}".format(data['summary']['total_dividendo']) }}</td>
+                        <td data-cell="Total investido">R$ {{ "{:,.2f}".format(data['summary']['total_investido']) }}</td>
+                        <td data-cell="Total dividendos">R$ {{ "{:,.2f}".format(data['summary']['total_dividendo']) }}</td>
                         <td data-cell="Total investido R$1000/m">R$ {{ "{:,.2f}".format(data['summary']['total_investir']) }}</td>
-                        <td data-cell="Total de cotas R$1000/m">{{ "{:,.2f}".format(data['summary']['total_cotas']) }}</td>
+                        <td data-cell="Total cotas R$1000/m">{{ "{:,.2f}".format(data['summary']['total_cotas']) }}</td>
                     </tr>
                 </tfoot>
                 {% endif %}
