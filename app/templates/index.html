@@ -16,15 +16,16 @@
     <div class="container p-5">
 
         <div class="m-4 text-center">
-            <i><img class="rounded mx-auto d-block mb-3"
-                    src="https://img.icons8.com/cotton/64/calculator--v2.png" /></i>
+ 
+            <i><img class="rounded mx-auto d-block mb-3"  src="https://img.icons8.com/cotton/64/calculator--v2.png" /> </i>
+            <!-- <i><img class="rounded mx-auto d-block mb-3 d-inline-flex"  src="https://img.icons8.com/dusk/64/cash.png" /> </i> -->
             <h1 class="text-white mb-5"> Calculadora de Rendimentos FIIs</h1>
         </div>
 
         <div class="mx-lg-5 px-lg-5 text-center">
             <form action="{{ url_for('calc')}}" method="post">
 
-                <div class="input-group mb-3 ms-auto me-auto">
+                <div class="input-group mb-3 ms-auto me-auto w-50">
                     <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="codigo" required multiple>
                 </div>
 
@@ -39,7 +40,7 @@
                     <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
                 </div>
 
-                <div class="input-group mt-3 ms-auto me-auto">
+                <div class="input-group mt-3 ms-auto me-auto w-50">
                     <input type="number" name="valor" class="form-control " placeholder="0.00">
                 </div>
 
@@ -63,7 +64,7 @@
 
         {% if data %}
         <div class="table-responsive">
-            <hr>
+            <hr class="border  border-1">
             <h2 class="text-center text-white m-3"> Resultado </h2>
             <table class="table table-bordered">
                 <tr>
