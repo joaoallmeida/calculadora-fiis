@@ -17,10 +17,10 @@ node {
     }
     
     stage('Set Environment Variables') {
-        // withCredentials([string(credentialsId: 'myIp', variable: 'secretIp')]) {
-        //     sh "sed -i 's|myIp|${secretIp}|' kubernetes/deploy.yaml"
-        // }
-
+        withCredentials([string(credentialsId: 'myIp', variable: 'secretIp')]) {
+            sh "sed -i 's|myIp|${secretIp}|' kubernetes/deploy.yaml"
+        }
+        
         sh "sed -i 's|latest|${env.BUILD_NUMBER}|' kubernetes/deploy.yaml"
         sh "sed -i 's|buildNumber|${env.BUILD_NUMBER}|' kubernetes/deploy.yaml"
 
