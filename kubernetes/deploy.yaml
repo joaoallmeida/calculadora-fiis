@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: calculadora-fiis-deployment
   labels:
-    version: buildNumber
+    version: "buildNumber"
     app: calcFiis
 spec:
   replicas: 3
