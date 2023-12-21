@@ -20,3 +20,18 @@ spec:
         image: joaoallmeida/calculadora-fiis:latest
         ports:
         - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculadora-fiis-service
+spec:
+  selector:
+    app.kubernetes.io/name: calcFiis
+  ports:
+    - name: http 
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  externalIPs:
+    - myIp
