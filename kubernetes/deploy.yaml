@@ -20,6 +20,7 @@ spec:
         image: joaoallmeida/calculadora-fiis:latest
         ports:
         - containerPort: 5000
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
@@ -30,7 +31,7 @@ spec:
     app.kubernetes.io/name: calcFiis
   type: LoadBalancer
   ports:
-  - port: 5000
+  - name: http 
+    protocol: TCP
+    port: 5000
     targetPort: 5000
-    # - name: http 
-      # protocol: TCP
