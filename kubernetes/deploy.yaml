@@ -28,10 +28,9 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/name: calcFiis
+  type: LoadBalancer
   ports:
-    - name: http 
-      protocol: TCP
-      port: 5000
-      targetPort: 5000
-  externalIPs:
-    - myIp
+  - port: 5000
+    targetPort: 5000
+    # - name: http 
+      # protocol: TCP
