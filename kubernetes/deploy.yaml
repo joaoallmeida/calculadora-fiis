@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculadora-fiis-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+    labels:
+      version: buildNumber
+      app: calcFiis
+    spec:
+      containers:
+      - name: calculadora-fiis
+        image: joaoallmeida/calculadora-fiis:latest
+        ports:
+        - containerPort: 5000

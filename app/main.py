@@ -6,7 +6,6 @@ import io
 import traceback
 
 
-
 class Calculator:
 
     def __init__(self, codes:list, choice:str, value:float) -> None:
@@ -89,7 +88,7 @@ class Calculator:
                         'total_investido': sum(row['investimento'] for row in data_list),
                         'total_dividendo': sum(row['dividendo'] for row in data_list),
                         'total_investir': sum(row['totalInvestir'] for row in data_list),
-                        'total_cotas':sum(row['totalCotas'] for row in data_list)    
+                        'total_cotas':  sum(row['totalCotas'] for row in data_list)    
                     }
 
         except Exception as e:
