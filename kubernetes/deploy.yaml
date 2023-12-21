@@ -2,13 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: calculadora-fiis-deployment
+  labels:
+    version: buildNumber
+    app: calcFiis
 spec:
-  replicas: 1
+  replicas: 3
+  selector:
+    matchLabels:
+      app: calcFiis
   template:
     metadata:
-    labels:
-      version: buildNumber
-      app: calcFiis
+      labels:
+        app: calcFiis
     spec:
       containers:
       - name: calculadora-fiis
