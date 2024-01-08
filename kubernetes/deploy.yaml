@@ -6,10 +6,10 @@ metadata:
     version: "buildNumber"
     app: calcFiis
 spec:
+  selector:
+    matchLabels:
+      app: calcFiis
   replicas: 1
-  # selector:
-  #   matchLabels:
-  #     app: calcFiis
   template:
     metadata:
       labels:
