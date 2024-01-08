@@ -18,18 +18,18 @@ spec:
       containers:
         - name: calculadora-fiis
           image: joaoallmeida/calculadora-fiis:latest
-          # ports:
-          # - containerPort: 5000
+          ports:
+          - containerPort: 5000
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: calculadora-fiis-service
-spec:
-  selector:
-    app: calcFiis
-  ports:
-  - protocol: "TCP"
-    port: 5000
-    targetPort: 5000
-  type: LoadBalancer
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: calculadora-fiis-service
+# spec:
+#   selector:
+#     app: calcFiis
+#   ports:
+#   - protocol: "TCP"
+#     port: 5000
+#     targetPort: 5000
+#   type: NodePort
