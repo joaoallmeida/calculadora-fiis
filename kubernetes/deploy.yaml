@@ -6,7 +6,7 @@ metadata:
     version: "buildNumber"
     app: calcFiis
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: calcFiis
@@ -29,6 +29,6 @@ spec:
   selector:
     app: calcFiis
   ports:
-  - port: 5000
-    targetPort: 5000
-  type: LoadBalancer
+  - protocol: TCP
+    port: 5000
+    targetPort: 6000
