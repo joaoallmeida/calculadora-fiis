@@ -1,0 +1,22 @@
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedFundsSIG/eyJ0eXBlRnVuZCI6NywicGFnZU51bWJlciI6OCwicGFnZVNpemUiOjYwfQ== HTTP/1.1
+Content-Type: application/json
+
+### Consulta sem CNPJ
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetDetailFundSIG/eyJ0eXBlRnVuZCI6NywiaWRlbnRpZmllckZ1bmQiOiJJUkRNIn0= HTTP/1.1
+Content-Type: application/json
+
+### Consulta com CNPJ
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetDetailFundSIG/eyJ0eXBlRnVuZCI6NywiY25waiI6IjI4ODMwMzI1MDAwMTEwIiwiaWRlbnRpZmllckZ1bmQiOiJJUkRNIn0= HTTP/1.1
+Content-Type: application/json
+
+# ###
+# GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedHeadLines/eyJhZ2VuY3kiOiIxOCIsImlkZW50aWZpZXJGdW5kIjoiKElSRE0iLCJkYXRlSW5pdGlhbCI6IjIwMjMtMDEtMDEiLCJkYXRlRmluYWwiOiIyMDIzLTEyLTMxIn0= HTTP/1.1
+
+###
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetListedDocuments/eyJwYWdlTnVtYmVyIjoxLCJwYWdlU2l6ZSI6NCwiY25waiI6IjI4ODMwMzI1MDAwMTEwIiwiaWRlbnRpZmllckZ1bmQiOiJJUkRNIiwidHlwZUZ1bmQiOjcsImRhdGVJbml0aWFsIjoiMjAyMy0wMS0wMSIsImRhdGVGaW5hbCI6IjIwMjMtMTItMzEiLCJjYXRlZ29yeSI6IjcifQ== HTTP/1.1
+Content-Type: application/json
+
+###
+# GET https://fnet.bmfbovespa.com.br/fnet/publico/exibirDocumento?id=573963 HTTP/1.1
+
+GET https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetDetailFundSIG/eyd0eXBlRnVuZCc6IDcsICdpZGVudGlmaWVyRnVuZCc6ICdWR0hGJ30=

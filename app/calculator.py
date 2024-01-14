@@ -1,14 +1,11 @@
 from flask import flash
 from typing import Dict
 from datetime import datetime
-
-from traitlets import Bool
 from utils import encodeParam
 import requests
 import pandas as pd
 import io
 import traceback
-import base64
 
 class Calculator:
     def __init__(self, codes:list, choice:str, value:float) -> None:
