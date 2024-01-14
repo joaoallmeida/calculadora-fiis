@@ -45,6 +45,15 @@ body {
     text-align: center;
 }
 
+.table a {
+    color: #2389fe;
+    text-decoration: none;
+}
+
+.table a:hover {
+    color: #79B8FF;
+}
+
 input[type='text']::placeholder{
     text-transform: initial;
 }
