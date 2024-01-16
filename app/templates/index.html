@@ -57,54 +57,63 @@
             <div class="alert alert-{{ category }} alert-dismissible fade show ms-auto me-auto w-75" role="alert">
                 {{ msg }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                    onclick="this.parentElement.style.display='none';"></button>
+                onclick="this.parentElement.style.display='none';"></button>
             </div>
             {% endfor %}
         </div>
-
+        
+        
         {% if data %}
-        <div class="table-responsive">
-            <hr class="border  border-1">
-            <h2 class="text-center text-white m-3"> Resultado </h2>
-            <table class="table">
-                <tr class="border">
-                    <th>Código Fundo</th>
-                    <th>N Cotas</th>
-                    <th>Preço</th>
-                    <th>Valor a investir</th>
-                    <th>Dividendos</th>
-                    <th>Relatório Gerencial</th>
-                    <!-- <th>Investimento R$1000/m</th> -->
-                    <!-- <th>Total de cotas R$1000/m</th> -->
-                </tr>
-                {% for row in data['result']: %}
-                <tr>
-                    <td data-cell="Código Fundo">{{ row['fundo'] }}</td>
-                    <td data-cell="N Cotas">{{ "{:,.2f}".format(row['cotas']) }}</td>
-                    <td data-cell="Preço">R$ {{ "{:,.2f}".format(row['preco']) }}</td>
-                    <td data-cell="Valor a Investir">R$ {{ "{:,.2f}".format(row['investimento']) }}</td>
-                    <td data-cell="Dividendos">R$ {{ "{:,.2f}".format(row['dividendo']) }}</td>
-                    <td data-cell="Relatório Gerencial"><a href="{{ row['report'] }}" target="_blank">Link Relatório</a></td>
-                    <!-- <td data-cell="Investimento R$1000/m">R$ {{ "{:,.2f}".format(row['totalInvestir']) }}</td> -->
-                    <!-- <td data-cell="Cotas R$1000/m">{{ "{:,.2f}".format(row['totalCotas']) }}</td> -->
-                </tr>
-                {% endfor %}
-                {% if data|length > 1 %}
-                <tfoot>
-                    <tr>
-                        <th class="border" colspan="3" data-cell="Totais">Total</th>
-                        <td data-cell="Total investido">R$ {{ "{:,.2f}".format(data['summary']['total_investido']) }}</td>
-                        <td data-cell="Total dividendos">R$ {{ "{:,.2f}".format(data['summary']['total_dividendo']) }}</td>
-                        <!-- <td data-cell="Total investido R$1000/m">R$ {{ "{:,.2f}".format(data['summary']['total_investir']) }}</td> -->
-                        <!-- <td data-cell="Total cotas R$1000/m">{{ "{:,.2f}".format(data['summary']['total_cotas']) }}</td> -->
-                    </tr>
-                </tfoot>
-                {% endif %}
-            </table>
-        </div>
+        <hr class="border  border-1">
+        <h2 class="text-center text-white m-3"> Resultado </h2>
+        {% for rowValue in data['result']: %}
+        <div class="container text-center  border border-primary-subtle rounded-3" style="background-color: #661ec5; margin: 10px 0;">
+            <div class="p-3 text-primary-emphasis">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col mb-3" style="max-width: 18rem;">
+                        <div class="card-header" style="color: #ffffff;"><b>Código Fundo</b></div>
+                        <div class="card-body">
+                            <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ rowValue['fundo'] }}</p>
+                        </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>N Cotas</b></div>
+                            <div class="card-body">
+                                <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ "{:,.2f}".format(rowValue['cotas']) }}</p>
+                            </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>Preço</b></div>
+                            <div class="card-body">
+                                <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['preco']) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row align-items-center justify-content-center">
+                    <div class="col mb-3" style="max-width: 18rem;">
+                        <div class="card-header" style="color: #ffffff;"><b>Total a Investir</b></div>
+                        <div class="card-body">
+                            <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['investimento']) }}</p>
+                        </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>Dividendos</b></div>
+                            <div class="card-body">
+                                <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['dividendo']) }}</p>
+                            </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>Relatório Gerencial</b></div>
+                            <div class="card-body">
+                                <p class="card-text"><a href="{{ rowValue['report'] }}" target="_blank">Link Relatório</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         {% endif %}
     </div>
-
 </body>
 
 </html>

@@ -32,7 +32,7 @@ body {
     border-color: #dd7835;
 }
 
-.table th {
+/* .table th {
     color: #eeeeee;
     background-color: #661ec5;
     text-align: center;
@@ -43,14 +43,14 @@ body {
     background-color: #020a13;
     color: #eeeeee;
     text-align: center;
-}
+} */
 
-.table a {
+a {
     color: #2389fe;
     text-decoration: none;
 }
 
-.table a:hover {
+a:hover {
     color: #79B8FF;
 }
 
