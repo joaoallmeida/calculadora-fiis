@@ -22,11 +22,11 @@ def calc():
              * Valor a investir
         """
 
-        codes = request.form.get('codigo').upper().split(',')
-        value = float(request.form.get('valor'))
-        choice = request.form.get('radio')
+        founds = request.form.get('found').upper().split(',')
+        value_invested = float(str(request.form.get('value_invested',type=str)).replace(',',''))
+        choice = request.form.get('choice')
 
-        calc = Calculator(codes,choice,value)
+        calc = Calculator(founds,choice,value_invested)
         data = calc.calculator()
 
         return render_template('index.html', data=data)

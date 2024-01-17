@@ -13,72 +13,77 @@
 </head>
 
 <body>
-    <div class="container p-5">
-
+    <div class="container justify-content-center align-items-center" style="margin-top: 100px;">
         <div class="m-4 text-center">
- 
             <i><img class="rounded mx-auto d-block mb-3"  src="https://img.icons8.com/cotton/64/calculator--v2.png" /> </i>
-            <!-- <i><img class="rounded mx-auto d-block mb-3 d-inline-flex"  src="https://img.icons8.com/dusk/64/cash.png" /> </i> -->
             <h1 class="text-white mb-5"> Calculadora de Rendimentos FIIs</h1>
         </div>
 
-        <div class="mx-lg-5 px-lg-5 text-center">
+        <div class="container text-center ">
             <form action="{{ url_for('calc')}}" method="post">
 
-                <div class="input-group mb-3 ms-auto me-auto w-50">
-                    <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="codigo" required multiple>
-                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="found" required multiple>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="value_invested" class="form-control " placeholder="0,00">
+                    </div>
+                  </div>
 
-                <div class="form-check form-switch d-inline-block mb-4 mt-4 me-4">
-                    <input class="form-check-input" type="checkbox" role="switch" name="radio"
-                        id="flexSwitchCheckDisabled" value="cotas">
-                    <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Cotas</label>
+                <div class="row justify-content-center">
+                    <div class="col-md-2">
+                        <div class="form-check form-switch d-inline-block mb-4 mt-4 me-4">
+                            <input class="form-check-input" type="checkbox" role="switch" name="choice"
+                            id="flexSwitchCheckDisabled" value="quotas">
+                            <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Cotas</label>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-check form-switch d-inline-block mb-4 mt-4 ms-4">
+                            <input class="form-check-input" type="checkbox" role="switch" name="choice"
+                            id="flexSwitchCheckDisabled" value="money">
+                            <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-switch d-inline-block mb-4 mt-4 ms-4">
-                    <input class="form-check-input" type="checkbox" role="switch" name="radio"
-                        id="flexSwitchCheckDisabled" value="dinheiro">
-                    <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
-                </div>
-
-                <div class="input-group mt-3 ms-auto me-auto w-50">
-                    <input type="number" name="valor" class="form-control " placeholder="0.00">
-                </div>
-
-                <div class="">
+                    
+                <div>
                     <button class="btn btn-outline-primary m-4" type="submit">Calcular</button>
-                    <button class="btn btn-outline-secondary m-4" type="reset"
-                        onclick="window.location.href='/calculadora'">Limpar</button>
+                    <button class="btn btn-outline-secondary m-4" type="reset" onclick="window.location.href='/calculadora'">Limpar</button>
                 </div>
+                
             </form>
         </div>
 
-        <div class="mx-lg-5 px-lg-5">
+        <div class="container text-center">
             {% for category, msg in get_flashed_messages(with_categories=true): %}
             <div class="alert alert-{{ category }} alert-dismissible fade show ms-auto me-auto w-75" role="alert">
                 {{ msg }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                onclick="this.parentElement.style.display='none';"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.style.display='none';"></button>
             </div>
             {% endfor %}
         </div>
         
-        
         {% if data %}
-        <hr class="border  border-1">
-        <h2 class="text-center text-white m-3"> Resultado </h2>
+        <div class="container d-block">
+            <hr class="border border-1">
+            <!-- <h2 class="text-center text-white m-3"> Resultado </h2> -->
+        </div>
+
         {% for rowValue in data['result']: %}
-        <div class="container text-center  border border-primary-subtle rounded-3" style="background-color: #661ec5; margin: 10px 0;">
+        <div class="calculator-content container-fluid justify-content-center align-items-center text-left border rounded-3 border-2 mt-2" style="background-color: #661ec5;">
             <div class="p-3 text-primary-emphasis">
                 <div class="row align-items-center justify-content-center">
-                    <div class="col mb-3" style="max-width: 18rem;">
+                    <div class="col mb-3 " style="max-width: 18rem;">
                         <div class="card-header" style="color: #ffffff;"><b>Código Fundo</b></div>
-                        <div class="card-body">
+                        <div class="card-body border-custom">
                             <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ rowValue['fundo'] }}</p>
                         </div>
                         </div>
                         <div class="mb-3" style="max-width: 18rem;">
                             <div class="card-header" style="color: #ffffff;"><b>N Cotas</b></div>
-                            <div class="card-body">
+                            <div class="card-body border-custom">
                                 <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ "{:,.2f}".format(rowValue['cotas']) }}</p>
                             </div>
                         </div>
@@ -92,13 +97,13 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="col mb-3" style="max-width: 18rem;">
                         <div class="card-header" style="color: #ffffff;"><b>Total a Investir</b></div>
-                        <div class="card-body">
+                        <div class="card-body border-custom">
                             <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['investimento']) }}</p>
                         </div>
                         </div>
                         <div class="mb-3" style="max-width: 18rem;">
                             <div class="card-header" style="color: #ffffff;"><b>Dividendos</b></div>
-                            <div class="card-body">
+                            <div class="card-body border-custom">
                                 <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['dividendo']) }}</p>
                             </div>
                         </div>
@@ -115,5 +120,4 @@
         {% endif %}
     </div>
 </body>
-
 </html>
