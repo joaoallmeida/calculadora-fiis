@@ -63,7 +63,11 @@ input[type='text']::placeholder{
         border: none;
     }
     
-    
+    .response-row {
+        display: flex;
+        flex-direction: column;
+        align-content: flex-start;
+    }
 }
 
 /* Media query for smaller mobile screens */
