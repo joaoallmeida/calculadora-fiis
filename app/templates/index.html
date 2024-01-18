@@ -2,109 +2,126 @@
 <html lang="pt-br">
 
 <head>
+    <title>Calculadora FIIs</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
     <link rel="icon" href="../static/img/icons8-prédio-96.png">
-    <title>Calculadora FIIs</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+    <script type='text/javascript'>
+        $(function() {
+            $('#value_invested').maskMoney();
+        });
+    </script>
 </head>
-
 <body>
-    <div class="container p-5">
-
+    <div class="container justify-content-center align-items-center" style="margin-top: 100px;">
         <div class="m-4 text-center">
- 
             <i><img class="rounded mx-auto d-block mb-3"  src="https://img.icons8.com/cotton/64/calculator--v2.png" /> </i>
-            <!-- <i><img class="rounded mx-auto d-block mb-3 d-inline-flex"  src="https://img.icons8.com/dusk/64/cash.png" /> </i> -->
             <h1 class="text-white mb-5"> Calculadora de Rendimentos FIIs</h1>
         </div>
 
-        <div class="mx-lg-5 px-lg-5 text-center">
+        <div class="container text-center ">
             <form action="{{ url_for('calc')}}" method="post">
 
-                <div class="input-group mb-3 ms-auto me-auto w-50">
-                    <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="codigo" required multiple>
-                </div>
+                <div class="row g-3 justify-content-center">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="found" required multiple>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" id="value_invested" name="value_invested" class="form-control" placeholder="0,00">
+                    </div>
+                  </div>
 
-                <div class="form-check form-switch d-inline-block mb-4 mt-4 me-4">
-                    <input class="form-check-input" type="checkbox" role="switch" name="radio"
-                        id="flexSwitchCheckDisabled" value="cotas">
-                    <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Cotas</label>
+                <div class="row justify-content-center ">
+                    <div class="col-sm-2 col-6">
+                        <div class="form-check form-check-inline mb-4 mt-4 me-4">
+                            <input class="form-check-input" type="radio" id="inlineRadioOptions" name="choice" value="quotas">
+                            <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Cotas</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-6">
+                        <div class="form-check form-check-inline mb-4 mt-4 ms-4">
+                            <input class="form-check-input" type="radio" role="switch" name="choice" id="inlineRadioOptions" value="money">
+                            <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-check form-switch d-inline-block mb-4 mt-4 ms-4">
-                    <input class="form-check-input" type="checkbox" role="switch" name="radio"
-                        id="flexSwitchCheckDisabled" value="dinheiro">
-                    <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
-                </div>
-
-                <div class="input-group mt-3 ms-auto me-auto w-50">
-                    <input type="number" name="valor" class="form-control " placeholder="0.00">
-                </div>
-
-                <div class="">
+                    
+                <div>
                     <button class="btn btn-outline-primary m-4" type="submit">Calcular</button>
-                    <button class="btn btn-outline-secondary m-4" type="reset"
-                        onclick="window.location.href='/calculadora'">Limpar</button>
+                    <button class="btn btn-outline-secondary m-4" type="reset" onclick="window.location.href='/calculadora'">Limpar</button>
                 </div>
+                
             </form>
         </div>
 
-        <div class="mx-lg-5 px-lg-5">
+        <div class="container text-center">
             {% for category, msg in get_flashed_messages(with_categories=true): %}
             <div class="alert alert-{{ category }} alert-dismissible fade show ms-auto me-auto w-75" role="alert">
                 {{ msg }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-                    onclick="this.parentElement.style.display='none';"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="this.parentElement.style.display='none';"></button>
             </div>
             {% endfor %}
         </div>
-
+        
         {% if data %}
-        <div class="table-responsive">
-            <hr class="border  border-1">
-            <h2 class="text-center text-white m-3"> Resultado </h2>
-            <table class="table">
-                <tr class="border">
-                    <th>Código Fundo</th>
-                    <th>N Cotas</th>
-                    <th>Preço</th>
-                    <th>Valor a investir</th>
-                    <th>Dividendos</th>
-                    <th>Relatório Gerencial</th>
-                    <!-- <th>Investimento R$1000/m</th> -->
-                    <!-- <th>Total de cotas R$1000/m</th> -->
-                </tr>
-                {% for row in data['result']: %}
-                <tr>
-                    <td data-cell="Código Fundo">{{ row['fundo'] }}</td>
-                    <td data-cell="N Cotas">{{ "{:,.2f}".format(row['cotas']) }}</td>
-                    <td data-cell="Preço">R$ {{ "{:,.2f}".format(row['preco']) }}</td>
-                    <td data-cell="Valor a Investir">R$ {{ "{:,.2f}".format(row['investimento']) }}</td>
-                    <td data-cell="Dividendos">R$ {{ "{:,.2f}".format(row['dividendo']) }}</td>
-                    <td data-cell="Relatório Gerencial"><a href="{{ row['report'] }}" target="_blank">Link Relatório</a></td>
-                    <!-- <td data-cell="Investimento R$1000/m">R$ {{ "{:,.2f}".format(row['totalInvestir']) }}</td> -->
-                    <!-- <td data-cell="Cotas R$1000/m">{{ "{:,.2f}".format(row['totalCotas']) }}</td> -->
-                </tr>
-                {% endfor %}
-                {% if data|length > 1 %}
-                <tfoot>
-                    <tr>
-                        <th class="border" colspan="3" data-cell="Totais">Total</th>
-                        <td data-cell="Total investido">R$ {{ "{:,.2f}".format(data['summary']['total_investido']) }}</td>
-                        <td data-cell="Total dividendos">R$ {{ "{:,.2f}".format(data['summary']['total_dividendo']) }}</td>
-                        <!-- <td data-cell="Total investido R$1000/m">R$ {{ "{:,.2f}".format(data['summary']['total_investir']) }}</td> -->
-                        <!-- <td data-cell="Total cotas R$1000/m">{{ "{:,.2f}".format(data['summary']['total_cotas']) }}</td> -->
-                    </tr>
-                </tfoot>
-                {% endif %}
-            </table>
+        <div class="container d-block">
+            <hr class="border border-1">
         </div>
+
+        {% for rowValue in data['result']: %}
+        <div class="calculator-content container-fluid justify-content-center align-items-center rounded-3 border-2 my-3 py-2" style="background-color: #661ec5;">
+            <div class="p-3 text-primary-emphasis">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col mb-3" style="max-width: 18rem;">
+                        <div class="card-header" style="color: #ffffff;"><b>Código Fundo</b></div>
+                        <div class="card-body border-custom">
+                            <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ rowValue['fundo'] }}</p>
+                        </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>N Cotas</b></div>
+                            <div class="card-body border-custom">
+                                <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ "{:,.2f}".format(rowValue['cotas']) }}</p>
+                            </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>Preço</b></div>
+                            <div class="card-body">
+                                <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['preco']) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row align-items-center justify-content-center" >
+                    <div class="col mb-3" style="max-width: 18rem;">
+                        <div class="card-header" style="color: #ffffff;"><b>Total a Investir</b></div>
+                        <div class="card-body border-custom">
+                            <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['investimento']) }}</p>
+                        </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>Dividendos</b></div>
+                            <div class="card-body border-custom">
+                                <p class="card-text" style="color: #eeeeee; font-size: 18px">R$ {{ "{:,.2f}".format(rowValue['dividendo']) }}</p>
+                            </div>
+                        </div>
+                        <div class="mb-3" style="max-width: 18rem;">
+                            <div class="card-header" style="color: #ffffff;"><b>Relatório Gerencial</b></div>
+                            <div class="card-body">
+                                <p class="card-text"><a href="{{ rowValue['report'] }}" target="_blank">Link Relatório</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         {% endif %}
     </div>
-
 </body>
-
 </html>

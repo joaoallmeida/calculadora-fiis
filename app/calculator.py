@@ -25,7 +25,7 @@ class Calculator:
             if self.__check_exists__(df):
                 for _ , row in df.iterrows():
 
-                    if self.choice == 'cotas':
+                    if self.choice == 'quotas':
                         cotes = self.value
                     else:
                         cotes = ( (self.value / len(df.index)) / row['PRECO'])
