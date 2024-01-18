@@ -2,16 +2,23 @@
 <html lang="pt-br">
 
 <head>
+    <title>Calculadora FIIs</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
     <link rel="icon" href="../static/img/icons8-prédio-96.png">
-    <title>Calculadora FIIs</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.2.6/jquery.inputmask.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+    <script type='text/javascript'>
+        $(function() {
+            $('#value_invested').maskMoney();
+        });
+    </script>
 </head>
-
 <body>
     <div class="container justify-content-center align-items-center" style="margin-top: 100px;">
         <div class="m-4 text-center">
@@ -27,22 +34,20 @@
                         <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="found" required multiple>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" name="value_invested" class="form-control " placeholder="0,00">
+                        <input type="text" id="value_invested" name="value_invested" class="form-control" placeholder="0,00">
                     </div>
                   </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-2">
-                        <div class="form-check form-switch d-inline-block mb-4 mt-4 me-4">
-                            <input class="form-check-input" type="checkbox" role="switch" name="choice"
-                            id="flexSwitchCheckDisabled" value="quotas">
+                <div class="row justify-content-center ">
+                    <div class="col-sm-2 col-6">
+                        <div class="form-check form-check-inline mb-4 mt-4 me-4">
+                            <input class="form-check-input" type="radio" id="inlineRadioOptions" name="choice" value="quotas">
                             <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Cotas</label>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-check form-switch d-inline-block mb-4 mt-4 ms-4">
-                            <input class="form-check-input" type="checkbox" role="switch" name="choice"
-                            id="flexSwitchCheckDisabled" value="money">
+                    <div class="col-sm-2 col-6">
+                        <div class="form-check form-check-inline mb-4 mt-4 ms-4">
+                            <input class="form-check-input" type="radio" role="switch" name="choice" id="inlineRadioOptions" value="money">
                             <label class="form-check-label text-white" for="flexSwitchCheckDisabled">Dinheiro</label>
                         </div>
                     </div>
@@ -68,14 +73,13 @@
         {% if data %}
         <div class="container d-block">
             <hr class="border border-1">
-            <!-- <h2 class="text-center text-white m-3"> Resultado </h2> -->
         </div>
 
         {% for rowValue in data['result']: %}
-        <div class="calculator-content container-fluid justify-content-center align-items-center text-left border rounded-3 border-2 mt-2" style="background-color: #661ec5;">
+        <div class="calculator-content container-fluid justify-content-center align-items-center rounded-3 border-2 mt-2" style="background-color: #661ec5;">
             <div class="p-3 text-primary-emphasis">
                 <div class="row align-items-center justify-content-center">
-                    <div class="col mb-3 " style="max-width: 18rem;">
+                    <div class="col mb-3" style="max-width: 18rem;">
                         <div class="card-header" style="color: #ffffff;"><b>Código Fundo</b></div>
                         <div class="card-body border-custom">
                             <p class="card-text" style="color: #eeeeee; font-size: 18px">{{ rowValue['fundo'] }}</p>
@@ -94,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                <div class="row align-items-center justify-content-center">
+                <div class="row align-items-center justify-content-center" >
                     <div class="col mb-3" style="max-width: 18rem;">
                         <div class="card-header" style="color: #ffffff;"><b>Total a Investir</b></div>
                         <div class="card-body border-custom">
