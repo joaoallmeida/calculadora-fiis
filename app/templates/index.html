@@ -15,7 +15,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
     <script type='text/javascript'>
         $(function() {
-            $('#value_invested').maskMoney();
+            $('#value_invested').maskMoney({
+                decimal: ".",
+                thousands: ","
+            });
         });
     </script>
 </head>
