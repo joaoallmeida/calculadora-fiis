@@ -28,8 +28,6 @@ node {
 
     } catch (Exception e) {
         error "Failed: ${e}"
-        throw
-
     } finally {
         deleteDir()
     }
