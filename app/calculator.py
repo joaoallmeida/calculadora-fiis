@@ -135,7 +135,8 @@ class Calculator:
                 docsList = responseDocs.json()
 
                 urlLink = docsList['results'][0]['urlViewerFundosNet'].replace('visualizarDocumento', 'exibirDocumento')
-
+        except IndexError:
+            urlLink = None
         except Exception as e:
             raise e
         return urlLink
