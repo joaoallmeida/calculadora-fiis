@@ -23,7 +23,7 @@ on:
     branches: [ "main" ]
 env:
   # Replace with the URL for your image's repository
-  DOCKERHUB_REPOSITORY_URL: https://hub.docker.com/repository/docker/joaoallmeida/calculadora-fiis
+  DOCKERHUB_REPOSITORY_URL: joaoallmeida/calculadora-fiis
 jobs:
   build:
     runs-on: ubuntu-latest
