@@ -53,7 +53,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ github.run_id }}
+        tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
     - name: Deploy Render Service
@@ -61,7 +61,7 @@ jobs:
       with:
         # Render API endpoint for creating a service preview
         # url: 'https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/preview'
-        param_encode: echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ github.run_id }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`
+        param_encode: echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`
         url: https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.HOOK_KEY_ID }}&imgURL=$param_encode
         method: 'POST'
         # All Render API requests require a valid API key.
