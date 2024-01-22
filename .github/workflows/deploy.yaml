@@ -1,7 +1,9 @@
 name: Preview Docker Image on Render
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      'app/**'
+
 env:
   DOCKERHUB_REPOSITORY_URL: docker.io/joaoallmeida/calculadora-fiis
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
