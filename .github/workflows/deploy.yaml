@@ -53,20 +53,15 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: ${{ BUILD_NUMBER }}
         labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Encode Parameter
+      run: |
+        echo ::set-env name=PARAM_ENCODE::$(echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ BUILD_NUMBER }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`)
 
     - name: Deploy Render Service
       uses: fjogeleit/http-request-action@v1
       with:
-        # Render API endpoint for creating a service preview
-        # url: 'https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/preview'
-        param_encode: echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`
-        url: https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.HOOK_KEY_ID }}&imgURL=$param_encode
+        url: https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.HOOK_KEY_ID }}&imgURL=${{ env.PARAM_ENCODE }}
         method: 'POST'
-        # All Render API requests require a valid API key.
-        # bearerToken: ${{ secrets.RENDER_API_KEY }}
-        # Here we specify the digest of the image we just
-        # built. You can alternatively provide the image's
-        # tag (main) instead of a digest.
-        # data: '{"imagePath": "${{ env.DOCKERHUB_REPOSITORY_URL }}@${{ steps.build.outputs.digest }}"}'
