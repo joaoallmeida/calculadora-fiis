@@ -1,28 +1,8 @@
-# This GitHub Action demonstrates building a Docker image,
-# pushing it to Docker Hub, and creating a Render build
-# preview with every push to the main branch.
-#
-# This Action requires setting the following secrets:
-#
-# - DOCKERHUB_USERNAME
-# - DOCKERHUB_ACCESS_TOKEN (create in Docker Hub)
-# - RENDER_API_KEY (create from the Account Settings page)
-# - RENDER_SERVICE_ID (the service to create a preview for)
-#
-# You must also set env.DOCKERHUB_REPOSITORY_URL below.
-#
-# Remember to delete previews when you're done with them!
-# You can do this from the Render Dashboard or via the
-# Render API.
-
 name: Preview Docker Image on Render
-# Fires whenever commits are pushed to the main branch
-# (including when a PR is merged)
 on:
   push:
     branches: [ "main" ]
 env:
-  # Replace with the URL for your image's repository
   DOCKERHUB_REPOSITORY_URL: docker.io/joaoallmeida/calculadora-fiis
 jobs:
   build:
@@ -58,7 +38,7 @@ jobs:
 
     - name: Encode Parameter
       run: |
-        echo ::set-env name=PARAM_ENCODE::$(echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`)
+         echo "::set-env name=PARAM_ENCODE::$(echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`)::"
 
     - name: Deploy Render Service
       uses: fjogeleit/http-request-action@v1
