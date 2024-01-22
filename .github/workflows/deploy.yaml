@@ -53,12 +53,12 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ BUILD_NUMBER }}
+        tags: ${{ github.run_id }}
         labels: ${{ steps.meta.outputs.labels }}
 
     - name: Encode Parameter
       run: |
-        echo ::set-env name=PARAM_ENCODE::$(echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ BUILD_NUMBER }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`)
+        echo ::set-env name=PARAM_ENCODE::$(echo `${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ github.run_id }} | sed 's|/|%2F|g' | sed 's|:|%2F|g'`)
 
     - name: Deploy Render Service
       uses: fjogeleit/http-request-action@v1
