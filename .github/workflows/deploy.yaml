@@ -61,7 +61,7 @@ jobs:
       with:
         # Render API endpoint for creating a service preview
         # url: 'https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/preview'
-        url: https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ HOOK_KEY_ID }}&imgURL=${{ DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }}
+        url: https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.HOOK_KEY_ID }}&imgURL=${{ env.DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }}
         method: 'POST'
         # All Render API requests require a valid API key.
         # bearerToken: ${{ secrets.RENDER_API_KEY }}
