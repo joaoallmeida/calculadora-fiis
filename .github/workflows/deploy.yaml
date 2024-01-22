@@ -56,17 +56,16 @@ jobs:
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
-    - name: Create Render service preview
+    - name: Deploy Render Service
       uses: fjogeleit/http-request-action@v1
       with:
         # Render API endpoint for creating a service preview
-        url: 'https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/preview'
+        # url: 'https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/preview'
+        url: https://api.render.com/deploy/${{ secrets.RENDER_SERVICE_ID }}?key=${{ HOOK_KEY_ID }}&imgURL=${{ DOCKERHUB_REPOSITORY_URL }}:${{ steps.meta.outputs.tags }}
         method: 'POST'
-
         # All Render API requests require a valid API key.
-        bearerToken: ${{ secrets.RENDER_API_KEY }}
-
+        # bearerToken: ${{ secrets.RENDER_API_KEY }}
         # Here we specify the digest of the image we just
         # built. You can alternatively provide the image's
         # tag (main) instead of a digest.
-        data: '{"imagePath": "${{ env.DOCKERHUB_REPOSITORY_URL }}@${{ steps.build.outputs.digest }}"}'
+        # data: '{"imagePath": "${{ env.DOCKERHUB_REPOSITORY_URL }}@${{ steps.build.outputs.digest }}"}'
