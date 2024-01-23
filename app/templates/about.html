@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Calculadora | Sobre</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="../static/style.css">
+        <link rel="icon" href="https://img.icons8.com/color/48/cash.png">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand navbar-color"">
+            <div class="container-fluid">
+                <a class="navbar-brand navbar-title" href="{{ url_for('calc')}}">
+                    <img src="https://img.icons8.com/color/48/cash.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                    Calculadora Fiis
+                </a>
+              <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('calc')}}">
+                            <img width="30" height="30" class="d-inline-block align-text-top" src="https://img.icons8.com/ios/50/back--v1.png"> 
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for('about')}}">
+                        <img width="30" height="30" class="d-inline-block align-text-top" src="https://img.icons8.com/office/30/about.png"> 
+                        </a>
+                    </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+        <div class="container-fluid mt-5 p-5 d-flex flex-wrap justify-content-center">
+            <div class="container d-block m-3 border-bottom">
+                <h3 class="text-left text-light mb-4">Sobre</h3>
+                <p class="p-conf text-left">
+                    O objetivo deste site é ajudar investidores a calcular os possíveis ganhos com fundos imobiliários, com base na quantidade de cotas ou no valor investido.
+                </p>
+            </div>
+            <div class="container d-block m-3 border-bottom">
+                <h3 class="text-left text-light mb-3">Autor</h3>
+                <p class="p-conf text-break text-left">
+                    Desenvolvido por um programador backend com um forte viés em engenharia de dados desenvolveu um site para calcular os possíveis ganhos de fundos imobiliários,
+                    no qual ficou com preguiça de pesquisar na internet e decidiu criar uma ferramenta simples e eficiente para atender às suas próprias necessidades.
+                    <br><br>
+                    Desenvolvido por <a class="link-primary" href="https://www.linkedin.com/in/joaovictorasoares/">João Soares</a>.
+                </p>
+            </div>
+            <div class="container d-block m-3">
+                <h3 class="text-left text-light mb-3">Quero Ajudar</h3>
+                <p class="p-conf text-break text-left">
+                   Quer ajudar no desenvolvimento e na melhoria do site ? ou achou algum bug ?
+                </p>
+                <div class="container p-1 d-flex flex-wrap justify-content-start">
+                    <a class="btn btn-outline-primary ms-0" href="https://github.com/joaoallmeida/calculadora-fiis" target="_blank" role="button">
+                        <img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/github.png" alt="github"/>
+                        Quero Ajudar
+                    </a>
+                    <a class="btn btn-outline-secondary ms-xl-3 ms-0" href="https://github.com/joaoallmeida/calculadora-fiis/graphs/contributors" role="button">
+                        <img width="24" height="24" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/github.png" alt="github"/>
+                        Desenvolvedores
+                    </a>
+                </div>
+            </div>
+            <div class="container d-block m-3 border-top">
+                <div class="mt-4">
+                    <h5 class="text-light">Créditos</h5>
+                </div>
+                <p class="p-footer mb-0"> Informações gerais fornecido por <a class="link-primary" href="https://statusinvest.com.br/">Status Invest</a></p>
+                <p class="p-footer mb-0"> Relátorios gerenciais fornecidos por <a class="link-primary" href="https://www.b3.com.br/pt_br/produtos-e-servicos/negociacao/renda-variavel/fundos-de-investimentos/fii/fiis-listados/">B3</a></p>
+                <p class="p-footer"> Icons by <a class="link-primary" href="https://icons8.com.br/">Icons8</a></p>
+            </div>
+        </div>
+    </body>
+</html>

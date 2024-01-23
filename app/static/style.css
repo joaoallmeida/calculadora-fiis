@@ -29,6 +29,24 @@ body {
     border-color: #dd7835;
 }
 
+.p-conf {
+    color: #b8b8b8;
+    font-size: 18px;
+}
+
+.p-footer {
+    color: #b8b8b8;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.navbar-color {
+    background-color: #eeeeee;
+}
+
+.navbar-title {
+    text-transform: initial;
+}
 
 a {
     color: #ffffff;
