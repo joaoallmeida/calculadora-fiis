@@ -6,7 +6,7 @@ Uma ferramenta online para calcular dividendos e estimar cotas de fundos imobili
 
 A Calculadora de Dividendos para Fundos Imobiliários é uma página web criada para simplificar o cálculo de dividendos de fundos imobiliários, com base na quantidade desejada de cotas.
 
-![Screenshot](docs/tela.png)
+![Screenshot](docs/homeScreen.png)
 
 ## Instruções de Uso
 
