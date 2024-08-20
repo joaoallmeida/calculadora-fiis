@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request
 from calculator import Calculator
 
 app = Flask(__name__)
@@ -6,14 +6,13 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/', methods=['GET','POST'])
 def calc():
-    # Verifica o tipo de requisição.
+    """
+        Coleta os dados de entradas:
+            * Codigo do fundo
+            * Quantidade de cotas
+            * Valor a investir
+    """
     if request.method == "POST":
-        """
-            Coleta os dados de entradas:
-             * Codigo do fundo
-             * Quantidade de cotas
-             * Valor a investir
-        """
 
         founds = request.form.get('found').upper().split(',')
         value_invested = float(str(request.form.get('value_invested',type=str)).replace(',',''))
