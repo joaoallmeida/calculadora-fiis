@@ -7,10 +7,10 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['GET','POST'])
 def calc():
     """
-        Coleta os dados de entradas:
-            * Codigo do fundo
-            * Quantidade de cotas
-            * Valor a investir
+    Coleta os dados de entradas:
+        * Codigo do fundo
+        * Quantidade de cotas
+        * Valor a investir
     """
     if request.method == "POST":
         # Collect all the dynamically generated fields
