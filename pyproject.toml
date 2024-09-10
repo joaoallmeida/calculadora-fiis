@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "calculadora-fiis"
+version = "0.1.0"
+description = ""
+authors = ["joaoallmeida <joaoallmeida96@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Flask = "^3.0.3"
+pandas = "^2.2.2"
+uWSGI = "^2.0.26"
+requests = "^2.32.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

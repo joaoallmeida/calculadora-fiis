@@ -9,10 +9,9 @@ import io
 import traceback
 
 class Calculator:
-    def __init__(self, codes:list, choice:str, value:float) -> None:
-        self.codes = [x.strip() for x in codes]
+    def __init__(self, form_data:list, choice:str) -> None:
+        self.data = form_data
         self.choice = choice
-        self.value = value
         self.currentYear = datetime.now().year
 
     def calculator(self) -> Dict:
@@ -26,18 +25,20 @@ class Calculator:
             if self.__check_exists__(df):
                 for _ , row in df.iterrows():
 
+                    val = [list(val.values())[0] for val in self.data if row['TICKER'] in val][0]
+
                     if self.choice == 'quotas':
-                        cotes = self.value
+                        value_invested = val
                     else:
-                        cotes = ( (self.value / len(df.index)) / row['PRECO'])
+                        value_invested = (val/row['PRECO'])
 
                     values = {
                         "fundo": row['TICKER'],
                         "preco": row['PRECO'],
-                        "cotas": round(cotes),
+                        "cotas": round(value_invested),
                         "ult_dividendo": row['ULTIMO DIVIDENDO'],
-                        "investimento": (row['PRECO'] * cotes),
-                        "dividendo": (cotes * row['ULTIMO DIVIDENDO']),
+                        "investimento": (row['PRECO'] * value_invested),
+                        "dividendo": (value_invested * row['ULTIMO DIVIDENDO']),
                         "totalInvestir": (row['PRECO'] * 1000 / row['ULTIMO DIVIDENDO']),
                         "totalCotas": round((1000 / row['ULTIMO DIVIDENDO'])),
                         "report": self.__get_report__(row['TICKER'])
@@ -71,13 +72,15 @@ class Calculator:
             }
 
             try:
+                codes = [list(item.keys())[0] for item in self.data]
+
                 response = requests.get( url, headers=headers)
                 content = response.content
                 response.raise_for_status()
 
                 df = pd.read_csv(io.StringIO(content.decode('utf-8')), sep=';')
 
-                df = df[df['TICKER'].isin(self.codes)]
+                df = df[df['TICKER'].isin(codes)]
                 df['PRECO'] = df['PRECO'].apply(lambda x: float(x.replace(".", "").replace(",", ".")))
                 df['DY'] = df['DY'].apply(lambda x: float(x.replace(".", "").replace(",", ".")))
                 df['ULTIMO DIVIDENDO'] = df['ULTIMO DIVIDENDO'].apply(lambda x: float(str(x).replace(".", "").replace(",", ".")))
@@ -93,7 +96,6 @@ class Calculator:
         try:
             paramGetDetail = encodeParam({'typeFund':7,'identifierFund':code.replace('11','')})
             urlGetDetail = f"https://sistemaswebb3-listados.b3.com.br/fundsProxy/fundsCall/GetDetailFundSIG/{paramGetDetail}"
-
 
             responseDetail = requests.get(urlGetDetail, headers=header, verify=False)
             details = responseDetail.json()['detailFund']
@@ -145,7 +147,8 @@ class Calculator:
 
     def __check_exists__(self, df:pd.DataFrame) -> bool:
         check = False
-        for code in self.codes:
+        codes = [list(item.keys())[0] for item in self.data]
+        for code in codes:
             if code not in df['TICKER'].values:
                 flash(f"Fundo imobiliário {code} não encontrado.", "warning")
             else:

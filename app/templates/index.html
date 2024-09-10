@@ -6,16 +6,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
     <link rel="icon" href="https://img.icons8.com/color/48/cash.png">
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js"></script>
-    <script type='text/javascript'>
-        $(document).ready(function(){
-            $('#value_invested').mask("#,##0.00", {reverse: true});
+    <script>
+        let fieldCount = 1;
+
+        // Function to add dynamic fields
+        function addFields() {
+            fieldCount++;
+
+            // Create new row div for the dynamic form fields
+            const newRow = document.createElement('div');
+            newRow.className = 'row g-2 justify-content-center';
+            newRow.id = `row_${fieldCount}`;  // Give a unique ID for the row
+
+            // First column for 'Código Fundo'
+            const col1 = document.createElement('div');
+            col1.className = 'col-auto';
+            const input1 = document.createElement('input');
+            input1.type = 'text';
+            input1.className = 'form-control text-uppercase';
+            input1.placeholder = `Código Fundo ${fieldCount}`;
+            input1.name = `found_${fieldCount}`;
+            input1.required = true;
+            col1.appendChild(input1);
+
+            // Second column for 'Value Invested'
+            const col2 = document.createElement('div');
+            col2.className = 'col-auto btn-plus';
+            const input2 = document.createElement('input');
+            input2.type = 'text';
+            input2.className = 'form-control value_invested';
+            input2.placeholder = '0,00';
+            input2.name = `value_invested_${fieldCount}`;
+            col2.appendChild(input2);
+
+            // Third column for 'Remove' button
+            const col3 = document.createElement('div');
+            col3.className = 'col-auto';
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'btn btn-danger-custom remove-field';
+            removeBtn.textContent = '-';
+            removeBtn.onclick = function() {
+                removeField(newRow.id);  // Call the removeField function on click
+            };
+            col3.appendChild(removeBtn);
+
+            // Append columns to the new row
+            newRow.appendChild(col1);
+            newRow.appendChild(col2);
+            newRow.appendChild(col3);
+
+            // Append the new row to the field container
+            document.getElementById('fieldContainer').appendChild(newRow);
+
+            // Apply mask to newly added fields
+            $('.value_invested').mask("#,##0.00", {reverse: true});
+        }
+
+        // Function to remove the dynamic field
+        function removeField(rowId) {
+            document.getElementById(rowId).remove();
+        }
+
+        // Initial masking for the default fields
+        $(document).ready(function() {
+            $('.value_invested').mask("#,##0.00", {reverse: true});
+
+            // Add remove functionality to initial fields
+            $('.remove-field').on('click', function() {
+                $(this).closest('.row').remove();
+            });
         });
     </script>
 </head>
@@ -43,17 +109,21 @@
             <h1 class="text-white mb-5"> Calculadora de Rendimentos FIIs</h1>
         </div>
 
-        <div class="container text-center ">
-            <form action="{{ url_for('calc')}}" method="post">
+        <div class="container-sm text-center ">
+            <form id="dynamicForm" action="{{ url_for('calc')}}" method="post">
 
-                <div class="row g-3 justify-content-center">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control text-uppercase" placeholder="Código Fundo" name="found" required multiple>
+                <div class="row g-2 justify-content-center" id="fieldContainer">
+                    <div class="col-auto" >
+                        <input type="text" class="form-control text-uppercase" placeholder="Código Fundo 1" name="found" required multiple>
                     </div>
-                    <div class="col-md-3">
-                        <input type="text" id="value_invested" name="value_invested" class="form-control" placeholder="0,00">
+                    <div class="col-auto btn-plus">
+                        <input type="text" name="value_invested" class="form-control value_invested" placeholder="0,00">
                     </div>
-                  </div>
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-plus-found" onclick="addFields()">+</button>
+                    </div>
+                </div>
+
 
                 <div class="row justify-content-center ">
                     <div class="col-sm-2 col-6">
